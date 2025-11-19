@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Utility Lookup</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        input { width: 400px; padding: 8px; }
+        button { padding: 8px; }
+        #result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Utility Lookup</h1>
+    <input type="text" id="addressInput" placeholder="Enter customer address">
+    <button onclick="lookupUtility()">Lookup</button>
+    <div id="result"></div>
+
+    <script>
+        async function lookupUtility() {
+            const address = document.getElementById('addressInput').value;
+            const response = await fetch('/api/lookup', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({address})
+            });
+            const data = await response.json();
+            document.getElementById('result').innerText = data.utility || "No matching utility found";
+        }
+    </script>
+</body>
+</html>
